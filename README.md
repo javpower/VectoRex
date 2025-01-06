@@ -1,5 +1,3 @@
----
-
 # **VectoRex**
 
 **纯 Java 实现的高性能向量搜索引擎**
@@ -8,7 +6,7 @@
   <img src="./image/logo.png" alt="VectoRex" style="border-radius: 10px;" />
 </div>
 
----
+
 
 ## **简介**
 

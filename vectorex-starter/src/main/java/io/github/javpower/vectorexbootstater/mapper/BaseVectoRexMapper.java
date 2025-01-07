@@ -29,7 +29,7 @@ public abstract class BaseVectoRexMapper<T> {
 
     public abstract VectoRexClient getClient();
 
-    private Class<T> getEntityType() {
+    public Class<T> getEntityType() {
         Type type = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         return (Class<T>) type;
     }

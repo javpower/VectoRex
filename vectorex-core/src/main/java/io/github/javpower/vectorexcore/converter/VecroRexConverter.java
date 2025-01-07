@@ -15,9 +15,7 @@ import org.springframework.util.CollectionUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,6 +47,7 @@ public class VecroRexConverter {
 
         List<Field> fields = getAllFieldsFromClass(entityClass);
         // 遍历实体类的所有字段，读取@MilvusField注解信息
+        Map<String,String> toField = new HashMap<>();
         for (Field field : fields) {
 
             VectoRexField fieldAnnotation = field.getAnnotation(VectoRexField.class);
@@ -57,16 +56,16 @@ public class VecroRexConverter {
             }
             // 处理字段名，优先使用注解中的字段名，若无则用反射获取的字段名
             String fieldName = fieldAnnotation.name().isEmpty() ? field.getName() : fieldAnnotation.name();
+            toField.put(fieldName,field.getName());
             // 缓存属性名与函数名的映射
             if (fieldAnnotation.dataType().equals(DataType.Scalar)) {
                 ScalarField scalarField = new ScalarField();
                 scalarField.setName(fieldName);
                 scalarField.setIsPrimaryKey(fieldAnnotation.isPrimaryKey());
-                scalarField.setAutoID(fieldAnnotation.autoID());
-                KeyValue<String, ScalarField> keyValue = new KeyValue<>(fieldName, scalarField);
+                KeyValue<String, ScalarField> keyValue = new KeyValue<>(field.getName(), scalarField);
                 scalarFields.add(keyValue);
                 if (fieldAnnotation.isPrimaryKey()) {
-                    VecroRexCache.primaryKey.put(entityClass.getName(), fieldName);
+                    VecroRexCache.primaryKey.put(entityClass.getName(), field.getName());
                 }
             } else {
                 boolean listFloat = isListFloat(field);
@@ -77,7 +76,7 @@ public class VecroRexConverter {
                 vectorFiled.setName(fieldName);
                 vectorFiled.setDimensions(fieldAnnotation.dimension());
                 vectorFiled.setMetricType(fieldAnnotation.metricType());
-                KeyValue<String, VectorFiled> keyValue = new KeyValue<>(fieldName,vectorFiled);
+                KeyValue<String, VectorFiled> keyValue = new KeyValue<>(field.getName(),vectorFiled);
                 vectorFileds.add(keyValue);
             }
         }
@@ -89,7 +88,8 @@ public class VecroRexConverter {
         if(VecroRexCache.primaryKey.get(entityClass.getName())==null){
             throw new IllegalArgumentException("the primary key does not null");
         }
-
+        VecroRexCache.rexCache.put(entityClass.getName(),vectoRex);
+        VecroRexCache.toField.put(entityClass.getName(),toField);
         return vectoRex;
     }
     /**

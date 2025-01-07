@@ -28,12 +28,11 @@ public abstract class VectoRexConditionBuilder<T> {
      * 添加等于条件。
      *
      * @param fieldName 字段名
-     * @param values    要比较的值列表
      * @return 当前条件构建器对象
      */
-    public VectoRexConditionBuilder<T> eq(FieldFunction<T, ?> fieldName, List<?> values) {
+    public VectoRexConditionBuilder<T> eq(FieldFunction<T, ?> fieldName,Object value) {
         String fn = getFieldName(fieldName);
-        return eq(fn, values);
+        return eq(fn, value);
     }
 
     /**
@@ -52,12 +51,11 @@ public abstract class VectoRexConditionBuilder<T> {
      * 添加不等于条件。
      *
      * @param fieldName 字段名
-     * @param values    要比较的值列表
      * @return 当前条件构建器对象
      */
-    public VectoRexConditionBuilder<T> ne(FieldFunction<T, ?> fieldName, List<?> values) {
+    public VectoRexConditionBuilder<T> ne(FieldFunction<T, ?> fieldName, Object value) {
         String fn = getFieldName(fieldName);
-        return ne(fn, values);
+        return ne(fn, value);
     }
 
     /**

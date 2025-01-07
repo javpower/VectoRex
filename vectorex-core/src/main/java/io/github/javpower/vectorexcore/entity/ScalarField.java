@@ -6,5 +6,4 @@ import lombok.Data;
 public class ScalarField {
     private String name;
     private Boolean isPrimaryKey;
-    private Boolean autoID;
 }

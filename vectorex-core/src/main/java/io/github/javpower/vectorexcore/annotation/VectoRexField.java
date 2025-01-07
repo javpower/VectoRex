@@ -43,9 +43,4 @@ public @interface VectoRexField {
      */
     boolean isPrimaryKey() default false;
 
-    /**
-     * 是否自动生成
-     */
-    boolean autoID() default false;
-
 }

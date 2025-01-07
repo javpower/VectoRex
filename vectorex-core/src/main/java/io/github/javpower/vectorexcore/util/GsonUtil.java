@@ -15,7 +15,7 @@ import java.util.Map;
 public final class GsonUtil {
 
     private GsonUtil() {
-        // 私有构造方法，防止实例化
+
     }
 
     /**

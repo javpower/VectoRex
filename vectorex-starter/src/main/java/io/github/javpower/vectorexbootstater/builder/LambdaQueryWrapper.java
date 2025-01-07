@@ -7,7 +7,6 @@ import io.github.javpower.vectorexbootstater.core.FieldFunction;
 import io.github.javpower.vectorexbootstater.core.VectoRexResult;
 import io.github.javpower.vectorexcore.VectoRexClient;
 import io.github.javpower.vectorexcore.cache.VecroRexCache;
-import io.github.javpower.vectorexcore.entity.VectoRexEntity;
 import io.github.javpower.vectorexcore.util.GsonUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,11 +24,9 @@ import java.util.stream.Collectors;
 @Data
 @Slf4j
 public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T>  {
-    private VectoRexEntity conversionCache;
 
     private Class<T> entityType;
     private String collectionName;
-
     private String annsField;
     private int topK=1;
     private List<Float> vector;

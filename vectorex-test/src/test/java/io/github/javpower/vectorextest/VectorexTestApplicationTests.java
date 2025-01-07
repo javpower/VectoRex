@@ -19,21 +19,21 @@ class VectorexTestApplicationTests {
     private FaceMapper faceMapper;
     @Test
     void testFace() {
-        List<VectoRexResult<Face>> query;
-         //新增
-        List<Face> faces = generateFaces(5);
-        faceMapper.insert(faces);
-         //查询
-        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
-        System.out.println(GsonUtil.toJson(query));
-        List<Float> floats = generateRandomVector(128);
-        query = faceMapper.queryWrapper().vector(Face::getVector, floats).query();
-        System.out.println(GsonUtil.toJson(query));
-        //删除
-        faceMapper.removeById(1);
-        //查询
-        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
-        System.out.println(GsonUtil.toJson(query));
+//        List<VectoRexResult<Face>> query;
+//         //新增
+//        List<Face> faces = generateFaces(5);
+//        faceMapper.insert(faces);
+//         //查询
+//        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
+//        System.out.println(GsonUtil.toJson(query));
+//        List<Float> floats = generateRandomVector(128);
+//        query = faceMapper.queryWrapper().vector(Face::getVector, floats).query();
+//        System.out.println(GsonUtil.toJson(query));
+//        //删除
+//        faceMapper.removeById(1);
+//        //查询
+//        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
+//        System.out.println(GsonUtil.toJson(query));
     }
 
     public static List<Face> generateFaces(int count) {

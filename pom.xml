@@ -52,7 +52,7 @@
             <dependencies>
                 <dependency>
                     <groupId>io.github.javpower</groupId>
-                    <artifactId>vectorex-boot-starter</artifactId>
+                    <artifactId>vectorex-starter</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>

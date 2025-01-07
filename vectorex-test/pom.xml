@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.javpower</groupId>
-    <artifactId>vectorex-client</artifactId>
+    <artifactId>vectorex-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>vectorex-client</name>
-    <description>vectorex-client</description>
+    <name>vectorex-test</name>
+    <description>vectorex-test</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.6.13</spring-boot.version>
+        <spring-boot.version>2.7.6</spring-boot.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>io.github.javpower</groupId>
             <artifactId>vectorex-starter</artifactId>
             <version>1.0.0-M1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -59,7 +65,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>io.github.javpower.vectorexbootstater.VectorexStaterApplication</mainClass>
+                    <mainClass>io.github.javpower.vectorextest.VectorexTestApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>

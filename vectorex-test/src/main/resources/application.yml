@@ -1,0 +1,10 @@
+server:
+  port: 8381
+spring:
+  application:
+    name: vectorex-test
+
+vectorex:
+  enable: true
+  packages:
+    - io.github.javpower.vectorextest.model

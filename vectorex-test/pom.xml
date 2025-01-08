@@ -14,10 +14,11 @@
         <spring-boot.version>2.7.6</spring-boot.version>
     </properties>
     <dependencies>
+
         <dependency>
             <groupId>io.github.javpower</groupId>
             <artifactId>vectorex-starter</artifactId>
-            <version>1.0.0-M1</version>
+            <version>1.0.0-M2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

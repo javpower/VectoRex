@@ -1,6 +1,8 @@
 package io.github.javpower.vectorextest;
 
 import io.github.javpower.vectorexbootstater.core.VectoRexResult;
+import io.github.javpower.vectorexcore.VectoRexClient;
+import io.github.javpower.vectorexcore.entity.VectoRexEntity;
 import io.github.javpower.vectorexcore.util.GsonUtil;
 import io.github.javpower.vectorextest.mapper.FaceMapper;
 import io.github.javpower.vectorextest.model.Face;
@@ -17,19 +19,21 @@ class VectorexTestApplicationTests {
 
     @Autowired
     private FaceMapper faceMapper;
+    @Autowired
+    private VectoRexClient client;
     @Test
     void testFace() {
         List<VectoRexResult<Face>> query;
          //新增
-//        List<Face> faces = generateFaces(10000);
-//        faceMapper.insert(faces);
+        List<Face> faces = generateFaces(10000);
+        faceMapper.insert(faces);
         System.out.printf("======");
          //查询
 //        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
 //        System.out.println(GsonUtil.toJson(query));
         List<Float> floats = generateRandomVector(128);
         long startTime = System.currentTimeMillis(); // 记录开始时间
-        query = faceMapper.queryWrapper().like(Face::getName, "Face 1").vector(Face::getVector, floats).topK(10).query();
+        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").vector(Face::getVector, floats).topK(10).query();
         long endTime = System.currentTimeMillis(); // 记录结束时间
         long duration = endTime - startTime; // 计算执行时间
         System.out.println("查询耗时: " + duration + " ms");
@@ -39,6 +43,8 @@ class VectorexTestApplicationTests {
 //        //查询
 //        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
 //        System.out.println(GsonUtil.toJson(query));
+        List<VectoRexEntity> collections = client.getCollections();
+        System.out.printf(GsonUtil.toJson(collections));
     }
 
     public static List<Face> generateFaces(int count) {

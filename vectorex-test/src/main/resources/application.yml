@@ -8,3 +8,4 @@ vectorex:
   enable: true
   packages:
     - io.github.javpower.vectorextest.model
+

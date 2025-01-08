@@ -67,7 +67,7 @@
 <dependency>
     <groupId>io.github.javpower</groupId>
     <artifactId>vectorex-starter</artifactId>
-    <version>1.0.0-M1</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 

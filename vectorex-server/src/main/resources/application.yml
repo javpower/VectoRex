@@ -1,0 +1,14 @@
+server:
+  port: 8382
+spring:
+  application:
+    name: vectorex-db
+
+vectorex:
+  enable: true
+  packages:
+
+# 启用 Micrometer
+management:
+  metrics:
+    enabled: true

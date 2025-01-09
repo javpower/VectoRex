@@ -54,79 +54,48 @@
   - 向量索引：支持动态添加、删除和更新向量数据。
 
 
+## **模块介绍**
 
----
+- **详情见相应模块的文档**
 
-## **快速开始**
+### **vectorex-starter**
 
-### **1. 安装**
+`vectorex-starter` 是一个用于简化 VectoRex 服务集成的 Spring Boot Starter。它提供了自动配置和便捷的 API，帮助开发者快速在 Spring Boot 应用中使用 VectoRex 功能。
 
-通过 Maven 引入 VectoRex：
+- **安装**
 
-```xml
-<dependency>
-    <groupId>io.github.javpower</groupId>
-    <artifactId>vectorex-starter</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
+  通过 Maven 引入 VectoRex：
 
-### **2. 基本用法**
-- **配置文件**
-```yaml
-vectorex:
-  enable: true
-  packages:
-  - io.github.javpower.vectorextest.model
-```
+  ```xml
+  <dependency>
+      <groupId>io.github.javpower</groupId>
+      <artifactId>vectorex-starter</artifactId>
+      <version>1.0.0</version>
+  </dependency>
+  ```
 
-```java
-// 示例代码
-class VectorexTestApplicationTests {
 
-  @Autowired
-  private FaceMapper faceMapper;
-  @Test
-  void testFace() {
-    List<VectoRexResult<Face>> query;
-    //新增
-    List<Face> faces = generateFaces(5);
-    faceMapper.insert(faces);
-    //查询
-    query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
-    System.out.println(GsonUtil.toJson(query));
-    List<Float> floats = generateRandomVector(128);
-    query = faceMapper.queryWrapper().vector(Face::getVector, floats).query();
-    System.out.println(GsonUtil.toJson(query));
-    //删除
-    faceMapper.removeById(1);
-    //查询
-    query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").query();
-    System.out.println(GsonUtil.toJson(query));
-  }
+### **vectorex-server**
 
-  public static List<Face> generateFaces(int count) {
-    List<Face> faces = new ArrayList<>();
-    for (int i = 0; i < count; i++) {
-      Face face = new Face();
-      face.setId((long) (i + 1)); // 生成从1开始的ID
-      face.setName("Face " + (i + 1)); // 生成简单的名称
-      face.setVector(generateRandomVector(128)); // 生成128维的随机向量
-      faces.add(face);
-    }
-    return faces;
-  }
+`vectorex-server` 是一个独立部署的检索服务，支持创建集合、添加数据、查询数据等功能。它提供了 RESTful API 接口，方便客户端进行交互。
 
-  private static List<Float> generateRandomVector(int dimension) {
-    List<Float> vector = new ArrayList<>();
-    Random random = new Random();
-    for (int i = 0; i < dimension; i++) {
-      vector.add(random.nextFloat()); // 生成0到1之间的随机浮点数
-    }
-    return vector;
-  }
-}
-```
+
+### **vectorex-client**
+
+`vectorex-client` 是一个用于与 VectoRex 服务进行交互的 Java 客户端 SDK。它提供了创建集合、添加数据、查询数据等功能，帮助开发者更便捷地在应用中集成 VectoRex 服务。
+
+- **安装**
+
+  通过 Maven 引入 VectoRex 客户端：
+
+  ```xml
+  <dependency>
+      <groupId>io.github.javpower</groupId>
+      <artifactId>vectorrex-client</artifactId>
+      <version>1.0.0</version>
+  </dependency>
+  ```
+
 
 ## **性能 benchmark**
 

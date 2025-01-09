@@ -1,0 +1,15 @@
+server:
+  port: 8382
+spring:
+  application:
+    name: vectorex-db
+
+# 启用 Micrometer
+management:
+  metrics:
+    enabled: true
+
+vectorex:
+  username: admin
+  password: 123456
+  secretKey: ocK8mU7GJ8PnEXHMWCyvog==

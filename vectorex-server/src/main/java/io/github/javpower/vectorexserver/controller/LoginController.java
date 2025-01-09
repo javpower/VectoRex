@@ -20,14 +20,22 @@ import java.util.Objects;
 public class LoginController {
     @Autowired
     private VectorRex user;
+    @Autowired
+    private TokenUtil tokenUtil;
 
     @PostMapping("/login")
     @IgnoreLogin
     public ServerResponse login(@RequestBody LoginUser req) {
        if(Objects.equals(req.getUsername(),user.getUsername())&&Objects.equals(req.getPassword(),user.getPassword())){
-           return ServerResponse.createBySuccess("操作成功",TokenUtil.generateToken(req.getUsername(),req.getPassword()));
+           return ServerResponse.createBySuccess("操作成功",tokenUtil.generateToken(req.getUsername(),req.getPassword()));
        }
        return ServerResponse.createByError("密码错误");
+    }
+    @PostMapping("/logout")
+    public ServerResponse logout() throws Exception {
+        String token = TokenUtil.getToken();
+        tokenUtil.del(token);
+        return ServerResponse.createBySuccess("登出成功");
     }
 
 }

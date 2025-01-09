@@ -1,11 +1,12 @@
 package io.github.javpower.vectorexserver.util;
 
+import io.github.javpower.vectorex.keynote.VectorDB;
 import lombok.extern.slf4j.Slf4j;
+import org.mapdb.DB;
+import org.mapdb.HTreeMap;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Token工具类
@@ -16,11 +17,14 @@ import java.util.Map;
 @Slf4j
 @Component
 public class TokenUtil {
-
+    private DB db;
     // Token 有效期（单位：毫秒）
     private static final long TOKEN_EXPIRATION_TIME = 3600_000; // 1 小时
-
-    public static final Map<String,Long> TOKEN_TIME=new HashMap<>();
+    private HTreeMap<String, Long> TOKEN_TIME;
+    public TokenUtil(){
+        db=VectorDB.mapDBManager.getDb();
+        TOKEN_TIME=(HTreeMap<String, Long>)db.hashMap("VectoRexTokenTime").createOrOpen();
+    }
 
     /**
      * 生成 Token
@@ -29,11 +33,12 @@ public class TokenUtil {
      * @param password 密码
      * @return 生成的 Token
      */
-    public static String generateToken(String username, String password) {
+    public String generateToken(String username, String password) {
         // 拼接用户名、密码和时间戳
-        String data = username + "|" + password;
+        String data = username + "|" + password+"|"+System.currentTimeMillis();
         String encrypt = AesUtil.encrypt(data);
         TOKEN_TIME.put(encrypt,System.currentTimeMillis());
+        db.commit();
         return encrypt;
     }
 
@@ -43,7 +48,7 @@ public class TokenUtil {
      * @param token 需要验证的 Token
      * @return 是否有效
      */
-    public static boolean validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
             // 解密 Token
             AesUtil.decrypt(token);
@@ -51,14 +56,26 @@ public class TokenUtil {
             Long tokenTime = TOKEN_TIME.get(token);
             if(tokenTime!=null){
                 long currentTime = System.currentTimeMillis();
-                return (currentTime - tokenTime) <= TOKEN_EXPIRATION_TIME;
+                if ((currentTime - tokenTime) <= TOKEN_EXPIRATION_TIME) {
+                    return true;
+                }
+                TOKEN_TIME.remove(token);
+                db.commit();
+                return false;
             }else {
-                TOKEN_TIME.put(token,System.currentTimeMillis());
+                return false;
             }
-            return true;
         } catch (Exception e) {
             return false;
         }
+    }
+    public void reToken(String token) {
+        TOKEN_TIME.put(token,System.currentTimeMillis());
+        db.commit();
+    }
+    public void del(String token) {
+        TOKEN_TIME.remove(token);
+        db.commit();
     }
 
     /**
@@ -101,5 +118,6 @@ public class TokenUtil {
         String token = request.getHeader("token");
         return token;
     }
+
 
 }

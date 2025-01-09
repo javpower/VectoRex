@@ -13,13 +13,16 @@ import javax.servlet.http.HttpServletResponse;
  **/
 @Slf4j
 public class RefreshTokenInterceptor implements HandlerInterceptor {
-
+    private TokenUtil tokenUtil;
+    public RefreshTokenInterceptor(TokenUtil tokenUtil) {
+        this.tokenUtil = tokenUtil;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = TokenUtil.getToken(request);
         if(token!=null){
-            TokenUtil.TOKEN_TIME.put(token,System.currentTimeMillis());
+            tokenUtil.reToken(token);
         }
         return true;
     }

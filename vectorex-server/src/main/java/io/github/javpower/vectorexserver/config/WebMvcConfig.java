@@ -4,6 +4,8 @@ package io.github.javpower.vectorexserver.config;
 import io.github.javpower.vectorexserver.interceptor.JsonRequestBodyFilter;
 import io.github.javpower.vectorexserver.interceptor.LoginInterceptor;
 import io.github.javpower.vectorexserver.interceptor.RefreshTokenInterceptor;
+import io.github.javpower.vectorexserver.util.TokenUtil;
+import io.github.javpower.vectorexserver.util.VectorRexSpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +27,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public LoginInterceptor loginInterceptor() {
-        return new LoginInterceptor();
+        return new LoginInterceptor(VectorRexSpringUtils.getBean(TokenUtil.class));
     }
     @Bean
     public RefreshTokenInterceptor refreshTokenInterceptor() {
-        return new RefreshTokenInterceptor();
+        return new RefreshTokenInterceptor(VectorRexSpringUtils.getBean(TokenUtil.class));
     }
     @Bean
     public FilterRegistrationBean jsonRequestBodyFilter() {

@@ -13,6 +13,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static io.github.javpower.vectorexserver.response.ResponseCode.NO_AUTH;
+
 /**
  * @author gc.x
  * @date 2022/6/26
@@ -20,7 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
-
+    private TokenUtil tokenUtil;
+    public LoginInterceptor(TokenUtil tokenUtil) {
+        this.tokenUtil = tokenUtil;
+    }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestUrl = request.getRequestURI();
@@ -35,11 +40,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
             String token = TokenUtil.getToken(request);
             if (StringUtils.isBlank(token)) {
-                throw CommonException.create(ServerResponse.createByError("token不能为空"));
+                throw CommonException.create(ServerResponse.createByError(NO_AUTH.getCode(),"token不能为空"));
             }
             //校验 token
-            if(!TokenUtil.validateToken(token)){
-                throw CommonException.create(ServerResponse.createByError("无效token"));
+            if(!tokenUtil.validateToken(token)){
+                throw CommonException.create(ServerResponse.createByError(NO_AUTH.getCode(),"无效token"));
             }
         }
         return true;

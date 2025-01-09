@@ -5,11 +5,8 @@ public enum ResponseCode {
 
     SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
-    PARAM_ERROR(2,"PARAM_ERROR"),
 
-    NO_AUTH(401,"NO_SYSTEM_AUTH"),
-    ERR_AUTH(403,"ILLEGAL_ARGUMENT")
-    ;
+    NO_AUTH(401,"NO_AUTH"),;
 
     private  final  int code;
     private final  String desc;

@@ -25,7 +25,6 @@ public class PaginationUtil {
         }
 
         int totalRecords = dataList.size();
-//        int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
         // 计算分页范围
         int fromIndex = (pageIndex - 1) * pageSize;

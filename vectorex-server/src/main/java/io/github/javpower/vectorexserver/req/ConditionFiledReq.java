@@ -3,6 +3,8 @@ package io.github.javpower.vectorexserver.req;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Schema(description = "条件字段请求参数")
 public class ConditionFiledReq {
@@ -23,5 +25,5 @@ public class ConditionFiledReq {
     private Comparable end;
 
     @Schema(description = "嵌套条件字段")
-    private ConditionFiledReq conditionFiledReq;
+    private List<ConditionFiledReq> conditionFiledReq;
 }

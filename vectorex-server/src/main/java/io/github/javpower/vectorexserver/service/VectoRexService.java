@@ -126,7 +126,7 @@ public class VectoRexService {
         if(req.getQuery()!=null){
             List<ConditionFiledReq> query = req.getQuery();
             query.forEach(e->{
-                getConditionBuilder(builder,e);
+                getConditionBuilder(builder,e.getConditionFiledReq());
             });
         }
         if(req.getVector()!=null&&req.getVectorFieldName()!=null){
@@ -147,50 +147,53 @@ public class VectoRexService {
         }
     }
 
-    private ConditionBuilder getConditionBuilder(ConditionBuilder builder,ConditionFiledReq e) {
-        String k = e.getField();
-        Object value = e.getValue();
-        String op = e.getOperator();
-        switch (op){
-            case "eq":
-                builder.eq(k,value);
-                break;
-            case "in":
-                builder.in(k, (List<?>) value);
-                break;
-            case "like":
-                builder.like(k,value.toString());
-                break;
-            case "between":
-                builder.between(k, e.getStart(),e.getEnd());
-                break;
-            case "gt":
-                builder.gt(k, (Comparable) value);
-                break;
-            case "lt":
-                builder.lt(k, (Comparable) value);
-                break;
-            case "ge":
-                builder.ge(k, (Comparable) value);
-                break;
-            case "le":
-                builder.le(k, (Comparable) value);
-                break;
-            case "and":
-                ConditionFiledReq and = e.getConditionFiledReq();
-                ConditionBuilder and_other = new ConditionBuilder();
-                getConditionBuilder(and_other,and);
-                builder.and(and_other);
-                break;
-            case "or":
-                ConditionFiledReq or = e.getConditionFiledReq();
-                ConditionBuilder or_other =new ConditionBuilder();
-                getConditionBuilder(or_other,or);
-                builder.or(or_other);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported operator: " + op);
-        }
+    private ConditionBuilder getConditionBuilder(ConditionBuilder builder,List<ConditionFiledReq> ee) {
+       ee.forEach(e->{
+           String k = e.getField();
+           Object value = e.getValue();
+           String op = e.getOperator();
+           switch (op){
+               case "eq":
+                   builder.eq(k,value);
+                   break;
+               case "in":
+                   builder.in(k, (List<?>) value);
+                   break;
+               case "like":
+                   builder.like(k,value.toString());
+                   break;
+               case "between":
+                   builder.between(k, e.getStart(),e.getEnd());
+                   break;
+               case "gt":
+                   builder.gt(k, (Comparable) value);
+                   break;
+               case "lt":
+                   builder.lt(k, (Comparable) value);
+                   break;
+               case "ge":
+                   builder.ge(k, (Comparable) value);
+                   break;
+               case "le":
+                   builder.le(k, (Comparable) value);
+                   break;
+               case "and":
+                   List<ConditionFiledReq> and = e.getConditionFiledReq();
+                   ConditionBuilder and_other = new ConditionBuilder();
+                   getConditionBuilder(and_other,and);
+                   builder.and(and_other);
+                   break;
+               case "or":
+                   List<ConditionFiledReq> or = e.getConditionFiledReq();
+                   ConditionBuilder or_other =new ConditionBuilder();
+                   getConditionBuilder(or_other,or);
+                   builder.or(or_other);
+                   break;
+               default:
+                   throw new IllegalArgumentException("Unsupported operator: " + op);
+           }
+       });
+
         return builder;
     }
 

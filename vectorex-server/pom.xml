@@ -89,10 +89,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-                <configuration>
-                    <mainClass>io.github.javpower.vectorexbootstater.VectorexStaterApplication</mainClass>
-                    <skip>true</skip>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <mainClass>io.github.javpower.vectorexbootstater.VectorexStaterApplication</mainClass>-->
+<!--                    <skip>true</skip>-->
+<!--                </configuration>-->
                 <executions>
                     <execution>
                         <id>repackage</id>

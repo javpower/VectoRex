@@ -187,7 +187,7 @@
         <modules>
             <module>./vectorex-starter</module>
             <module>./vectorex-core</module>
-
+            <module>./vectorex-client</module>
         </modules>
 
 

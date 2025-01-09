@@ -17,6 +17,11 @@
 
         <dependency>
             <groupId>io.github.javpower</groupId>
+            <artifactId>vectorex-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.javpower</groupId>
             <artifactId>vectorex-starter</artifactId>
             <version>1.0.0</version>
             <exclusions>

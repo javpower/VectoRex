@@ -4,11 +4,12 @@ spring:
   application:
     name: vectorex-db
 
-vectorex:
-  enable: true
-  packages:
-
 # 启用 Micrometer
 management:
   metrics:
     enabled: true
+
+vectorex:
+  username: admin
+  password: 123456
+  secretKey: ocK8mU7GJ8PnEXHMWCyvog==

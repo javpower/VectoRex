@@ -84,12 +84,12 @@
 
 以下是一些与项目相关的推荐资源或合作伙伴：
 
-| 名称           | 描述                                  | 链接                                        |
-|--------------|-------------------------------------|-------------------------------------------|
+| 名称           | 描述                                 | 链接                                       |
+|--------------|------------------------------------|------------------------------------------|
 | **VectoRex** | VectoRex 项目的官方文档，包含详细的使用指南和 API 参考。 | [查看文档](https://vectorex-doc.m78cloud.cn/) |
-| **MilvusPlus** | Milvus向量数据库增强操作库                         | [查看文档](https://milvus-plus.dromara.org/)  |
-| **Dante Cloud** | “一套代码、两种架构”的企业级多租户微服务系统                         | [查看文档](https://www.herodotus.cn)  |
-| **Warm-Flow** |  国产工作流引擎🎉，简洁轻量，jar包快速引入设计器   | [查看文档](https://warm-flow.dromara.org/）  |
+| **MilvusPlus** | Milvus向量数据库增强操作库                   | [查看文档](https://milvus-plus.dromara.org/) |
+| **Dante Cloud** | “一套代码、两种架构”的企业级多租户微服务系统            | [查看文档](https://www.herodotus.cn)         |
+| **Warm-Flow** | 国产工作流引擎🎉，简洁轻量，jar包快速引入设计器         | [查看文档](https://warm-flow.dromara.org/)     |
 
 ---
 

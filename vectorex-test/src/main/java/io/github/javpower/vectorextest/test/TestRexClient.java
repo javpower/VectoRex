@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TestRexClient {
     public static void main(String[] args) {
-        VectorRexClient client = new VectorRexClient(" https://vectorex.m78cloud.cn", "admin", "123456");
+        VectorRexClient client = new VectorRexClient("https://vectorex.m78cloud.cn", "admin", "123456");
         System.out.println("========");
         List<ScalarField> scalarFields = new ArrayList();
         ScalarField id = ScalarField.builder().name("id").isPrimaryKey(true).build();

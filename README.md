@@ -46,7 +46,10 @@
       <version>1.0.0</version>
   </dependency>
   ```
-
+- **vectorex-client-go**：作为 Go 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等功能。通过 Go Modules 引入 VectoRex 客户端时，只需运行以下命令：
+```bash
+  go get github.com/javpower/VectoRex/vectorex-client-go
+  ```
 ---
 
 ## **性能 benchmark**

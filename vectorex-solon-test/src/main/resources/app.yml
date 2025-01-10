@@ -1,0 +1,12 @@
+server.port: 8381
+
+solon.app:
+  name: 'vectorex-solon-test'
+  group: 'vectorex'
+
+
+vectorex:
+  enable: true
+#  uri: localhost:6831
+  packages:
+    - io.github.javpower.vectorextest.model

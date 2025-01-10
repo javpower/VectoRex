@@ -44,6 +44,7 @@
             <javapoet.version>1.13.0</javapoet.version>
             <auto.service.version>1.0</auto.service.version>
             <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
+            <solon.version>2.7.6</solon.version>
         </properties>
         <dependencies>
 
@@ -53,6 +54,11 @@
                 <dependency>
                     <groupId>io.github.javpower</groupId>
                     <artifactId>vectorex-starter</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.github.javpower</groupId>
+                    <artifactId>vectorex-solon-plugin</artifactId>
                     <version>${revision}</version>
                 </dependency>
                 <dependency>

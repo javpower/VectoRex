@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class VectorRexClient {
 
-    private static final long TOKEN_EXPIRE_TIME = 2 * 60 * 60 * 1000; // Token expires in 2 hours
+    private static final long TOKEN_EXPIRE_TIME = 2 * 60 * 60 * 1000-2*60*1000; // Token expires in 2 hours
 
     private final String baseUri;
     private final String username;

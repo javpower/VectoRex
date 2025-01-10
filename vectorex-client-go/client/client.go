@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	TokenExpireTime = 2 * time.Hour // Token 过期时间
+	TokenExpireTime = 2*time.Hour - time.Minute // Token 过期时间
 )
 
 type VectorRexClient struct {

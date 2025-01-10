@@ -48,7 +48,7 @@ VectorRex Server 是一个高性能的向量检索服务，支持创建集合、
 2. 运行 Docker 容器：
 
    ```sh
-   docker run -d -p 8080:8080 --name vectorrex-server javpower/vectorex-server:v1.0.0
+   docker run -d -p 8080:8382 --name vectorrex-server javpower/vectorex-server:v1.0.0
    ```
 
    服务默认监听 `8080` 端口，可通过 `-p` 参数映射到宿主机的端口。

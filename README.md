@@ -47,6 +47,9 @@
   </dependency>
   ```  
 - **vectorex-server**：作为一个独立部署的检索服务，具备创建集合、添加数据、查询数据等完整功能，为用户提供灵活的部署选项。
+  ```sh
+   docker run -d -p 8080:8382 --name vectorrex-server javpower/vectorex-server:v1.0.0
+   ```
 - **vectorex-client**：作为 Java 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等，助力开发者便捷地在应用中集成 VectoRex 服务。通过 Maven 引入 VectoRex 客户端时，只需添加以下依赖：
   ```xml
   <dependency>
@@ -56,8 +59,8 @@
   </dependency>
   ```
 - **vectorex-client-go**：作为 Go 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等功能。通过 Go Modules 引入 VectoRex 客户端时，只需运行以下命令：
-```bash
-  go get github.com/javpower/VectoRex/vectorex-client-go
+  ```bash
+   go get github.com/javpower/VectoRex/vectorex-client-go
   ```
 ---
 

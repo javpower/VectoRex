@@ -90,6 +90,7 @@
 | **MilvusPlus** | Milvus向量数据库增强操作库                   | [查看文档](https://milvus-plus.dromara.org/) |
 | **Dante Cloud** | “一套代码、两种架构”的企业级多租户微服务系统            | [查看文档](https://www.herodotus.cn)         |
 | **Warm-Flow** | 国产工作流引擎🎉，简洁轻量，jar包快速引入设计器         | [查看文档](https://warm-flow.dromara.org/)     |
+| **Skyeye云** | 集成OA、CRM、ERP、MES、PM、行政等为一体智能制造软件。 | [查看文档](https://gitee.com/dromara/skyeye) |
 
 ---
 

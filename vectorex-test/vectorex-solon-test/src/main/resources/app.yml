@@ -7,6 +7,5 @@ solon.app:
 
 vectorex:
   enable: true
-#  uri: localhost:6831
   packages:
     - io.github.javpower.vectorextest.model

@@ -38,6 +38,14 @@
       <version>1.0.0</version>
   </dependency>
   ```
+- **vectorex-solon-plugin**：作为 solon 插件，它提供了自动配置和便捷的 API，帮助开发者在 Solon 应用中轻松集成 VectoRex 功能。通过 Maven 引入 VectoRex 时，只需添加以下依赖：
+  ```xml
+  <dependency>
+      <groupId>io.github.javpower</groupId>
+      <artifactId>vectorex-solon-plugin</artifactId>
+      <version>1.0.0</version>
+  </dependency>
+  ```  
 - **vectorex-server**：作为一个独立部署的检索服务，具备创建集合、添加数据、查询数据等完整功能，为用户提供灵活的部署选项。
 - **vectorex-client**：作为 Java 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等，助力开发者便捷地在应用中集成 VectoRex 服务。通过 Maven 引入 VectoRex 客户端时，只需添加以下依赖：
   ```xml

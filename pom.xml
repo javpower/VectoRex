@@ -195,7 +195,6 @@
             <module>./vectorex-core</module>
             <module>./vectorex-client</module>
             <module>./vectorex-solon-plugin</module>
-
         </modules>
 
 

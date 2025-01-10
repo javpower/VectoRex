@@ -88,6 +88,7 @@
 |--------------|-------------------------------------|-------------------------------------------|
 | **VectoRex** | VectoRex 项目的官方文档，包含详细的使用指南和 API 参考。 | [查看文档](https://vectorex-doc.m78cloud.cn/) |
 | **MilvusPlus** | Milvus向量数据库增强操作库                         | [查看文档](https://milvus-plus.dromara.org/)  |
+| **Dante Cloud** | “一套代码、两种架构”的企业级多租户微服务系统                         | [查看文档](https://www.herodotus.cn)  |
 
 
 ---

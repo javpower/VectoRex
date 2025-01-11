@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>连接到VectoRex服务器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>连接到VectoRex服务器</h1>
+    <form id="vectorrexForm">
+        <label for="vectorrexAddress">VectoRex地址</label>
+        <input type="text" id="vectorrexAddress" placeholder="请输入VectoRex服务器地址" required>
+
+        <label for="username">用户名</label>
+        <input type="text" id="username" placeholder="请输入用户名" required>
+
+        <label for="password">密码</label>
+        <input type="password" id="password" placeholder="请输入密码" required>
+
+        <button type="button" onclick="connectToVectorrex()">连接</button>
+    </form>
+</div>
+
+<script>
+    function connectToVectorrex() {
+        const vectorrexAddress = document.getElementById('vectorrexAddress').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // 构造登录请求的URL
+        const loginUrl = `${vectorrexAddress}/vectorex/login`;
+
+        // 构造请求体
+        const loginData = {
+            username: username,
+            password: password
+        };
+
+        // 发送登录请求
+        fetch(loginUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('登录成功！');
+                // 这里可以处理登录成功后的逻辑，例如保存 token 等
+                console.log('Token:', data.data);
+            } else {
+                alert('登录失败：' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('登录请求失败:', error);
+            alert('登录请求失败，请检查网络连接或服务器地址是否正确。');
+        });
+    }
+</script>
+</body>
+</html>

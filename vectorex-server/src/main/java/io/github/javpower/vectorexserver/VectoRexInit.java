@@ -30,7 +30,6 @@ public class VectoRexInit  implements InitializingBean, DisposableBean {
         return vectoRexDbClient;
     }
 
-    //初始化操作
     public void handler() {
         List<VectoRexEntity> collections = vectoRexDbClient.getCollections();
         for (VectoRexEntity collection : collections) {

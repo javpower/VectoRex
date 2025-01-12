@@ -31,7 +31,6 @@ public class VectorRexSpringUtils implements ApplicationContextAware {
         return applicationContext.getBean(clazz);
     }
 
-    // 如果项目中有多个相同类型的Bean，你可能需要一个更具体的获取方法，例如：
     /**
      * 获取应用上下文中指定名称的Bean实例。
      * @param <T> Bean类型

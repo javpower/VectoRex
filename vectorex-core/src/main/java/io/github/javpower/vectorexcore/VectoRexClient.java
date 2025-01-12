@@ -27,6 +27,7 @@ public class VectoRexClient {
         db=VectorDB.mapDBManager.getDb();
         vectoRexEntityMap=(HTreeMap<String, VectoRexEntity>)db.hashMap("VectoRexCollections").createOrOpen();
     }
+
     public void createCollection(VectoRexEntity milvusEntity) {
         List<VectorFiled> vectorFileds = milvusEntity.getVectorFileds().stream().map(KeyValue::getValue).collect(Collectors.toList());
         VectorDB.createCollection(milvusEntity.getCollectionName(),maxDataCount,vectorFileds);

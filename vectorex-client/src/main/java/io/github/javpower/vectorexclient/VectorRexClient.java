@@ -1,6 +1,5 @@
 package io.github.javpower.vectorexclient;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.javpower.vectorexclient.builder.QueryBuilder;
 import io.github.javpower.vectorexclient.entity.VectoRexEntity;
 import io.github.javpower.vectorexclient.req.*;
@@ -13,8 +12,10 @@ import okhttp3.*;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class VectorRexClient {
@@ -25,8 +26,6 @@ public class VectorRexClient {
     private final String username;
     private final String password;
     private final OkHttpClient okHttpClient;
-    private final ObjectMapper objectMapper;
-
     private String token;
     private long tokenExpireTime;
 
@@ -35,7 +34,6 @@ public class VectorRexClient {
         this.username = username;
         this.password = password;
         this.okHttpClient = new OkHttpClient();
-        this.objectMapper = new ObjectMapper();
         try {
             login();
         } catch (IOException e) {
@@ -52,7 +50,19 @@ public class VectorRexClient {
     }
 
     public ServerResponse<List<VectoRexEntity>> getCollections()  {
-        return executeRequest("/vectorex/get/collections");
+        ServerResponse<List<Map>> response = executeRequest("/vectorex/get/collections");
+        if (response.isSuccess()) {
+            List<Map> data = response.getData();
+            List<VectoRexEntity> vectoRexEntities=new ArrayList<>();
+            for (Map datum : data) {
+                VectoRexEntity o = (VectoRexEntity)GsonUtil.convertMapToType(datum, VectoRexEntity.class);
+                vectoRexEntities.add(o);
+            }
+            ServerResponse serverResponse = ServerResponse.createBySuccess(vectoRexEntities);
+            return serverResponse;
+        }else {
+            return ServerResponse.createByError(response.getMsg());
+        }
     }
 
     public ServerResponse<Void> addCollectionData(CollectionDataAddReq req)  {
@@ -71,11 +81,39 @@ public class VectorRexClient {
         CollectionDataPageReq queryReq = queryBuilder.build();
         CollectionDataQueryReq req = new CollectionDataQueryReq();
         BeanUtils.copyProperties(queryReq,req);
-        return executeRequest("/vectorex/collections/data/query", req);
+        ServerResponse<List<Map>> response = executeRequest("/vectorex/collections/data/query", req);
+        if (response.isSuccess()) {
+            List<VectorSearchResult> vectorSearchResults=new ArrayList<>();
+            List<Map> data = response.getData();
+            for (Map datum : data) {
+                VectorSearchResult o = (VectorSearchResult)GsonUtil.convertMapToType(datum, VectorSearchResult.class);
+                vectorSearchResults.add(o);
+            }
+            ServerResponse serverResponse = ServerResponse.createBySuccess(vectorSearchResults);
+            return serverResponse;
+        }else {
+            return ServerResponse.createByError(response.getMsg());
+        }
     }
 
     public ServerResponse<PageResult<VectorSearchResult>> pageCollectionData(QueryBuilder queryBuilder)  {
-        return executeRequest("/vectorex/collections/data/page", queryBuilder.build());
+        ServerResponse<Object> response = executeRequest("/vectorex/collections/data/page", queryBuilder.build());
+        if (response.isSuccess()) {
+            Object data = response.getData();
+            String s = GsonUtil.toJson(data);
+            PageResult<Map> pageResult = GsonUtil.fromJson(s, PageResult.class);
+            List<VectorSearchResult> vectorSearchResults=new ArrayList<>();
+            List<Map> resultData = pageResult.getData();
+            for (Map datum : resultData) {
+                VectorSearchResult o = (VectorSearchResult)GsonUtil.convertMapToType(datum, VectorSearchResult.class);
+                vectorSearchResults.add(o);
+            }
+            PageResult<VectorSearchResult> resultPageResult = new PageResult<>(vectorSearchResults, pageResult.getTotalRecords(), pageResult.getPageIndex(), pageResult.getPageSize());
+            ServerResponse serverResponse = ServerResponse.createBySuccess(resultPageResult);
+            return serverResponse;
+        }else {
+            return ServerResponse.createByError(response.getMsg());
+        }
     }
 
     private <T> ServerResponse<T> executeRequest(String path) {
@@ -83,11 +121,11 @@ public class VectorRexClient {
     }
 
     private <T> ServerResponse<T> executeRequest(String path, Object reqBody)  {
-        log.info("executeRequest path: {}, reqBody: {}", path, GsonUtil.toJson(reqBody));
+        log.debug("executeRequest path: {}, reqBody: {}", path, GsonUtil.toJson(reqBody));
         try {
             checkToken();
             String url = baseUri + path;
-            RequestBody requestBody = reqBody != null ? RequestBody.create(objectMapper.writeValueAsString(reqBody), MediaType.parse("application/json; charset=utf-8")) : null;
+            RequestBody requestBody = reqBody != null ? RequestBody.create(GsonUtil.toJson(reqBody), MediaType.parse("application/json; charset=utf-8")) : null;
             Request request = new Request.Builder()
                     .url(url)
                     .post(requestBody)
@@ -113,7 +151,7 @@ public class VectorRexClient {
     private void login() throws IOException {
         String url = baseUri + "/vectorex/login";
         LoginUser loginUser = new LoginUser(username, password);
-        RequestBody requestBody = RequestBody.create(objectMapper.writeValueAsString(loginUser), MediaType.parse("application/json; charset=utf-8"));
+        RequestBody requestBody = RequestBody.create(GsonUtil.toJson(loginUser), MediaType.parse("application/json; charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)

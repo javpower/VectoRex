@@ -19,14 +19,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class VectoRexService {
     private final VectoRexClient vectoRexClient;
+    private final DashboardService dashboardService;
 
-    public VectoRexService(VectoRexClient vectoRexClient) {
+    public VectoRexService(VectoRexClient vectoRexClient, DashboardService dashboardService) {
         this.vectoRexClient = vectoRexClient;
+        this.dashboardService = dashboardService;
     }
 
     //创建集合
@@ -56,11 +60,39 @@ public class VectoRexService {
     }
     //获取集合
     public VectoRexEntity getCollection(String collection) {
+        dashboardService.incrementTodayQueryCount();
         return vectoRexClient.getCollection(collection);
     }
     //获取集合列表
     public List<VectoRexEntity> getCollections() {
+        dashboardService.incrementTodayQueryCount();
         return vectoRexClient.getCollections();
+    }
+    //分页获取集合列表
+    public PageResult<VectoRexEntity> pageCollection(VectoRexCollectionPageReq req) {
+        dashboardService.incrementTodayQueryCount();
+        List<VectoRexEntity> collections = getCollections().stream().filter(v->v.getCollectionName().contains(req.getCollectionName())).collect(Collectors.toList());
+        return PaginationUtil.paginate(collections, req.getPageIndex(), req.getPageSize());
+    }
+
+    public Map<String, Object> getDashboard(){
+        Map<String, Object> result=new HashMap<>();
+        String today = LocalDate.now().toString();
+        Map<String, Object> weekly = dashboardService.getWeeklyQueryCounts();
+        Integer todayNum = (Integer) weekly.get(today);
+        result.put("weeklyQueryTotal",weekly);
+        result.put("todayQueryTotal",todayNum==null?0:todayNum);
+        List<VectoRexEntity> collections = getCollections();
+        Integer dataTotal = 0;
+        for (VectoRexEntity collection : collections) {
+            MapDBStorage store = vectoRexClient.getStore(collection.getCollectionName());
+            dataTotal=dataTotal+store.getAll().size();
+        }
+        //集合总数
+        result.put("collectionTotal",collections.size());
+        //集合数据量总数
+        result.put("collectionDataTotal",dataTotal);
+        return result;
     }
 
     //添加集合数据
@@ -120,6 +152,7 @@ public class VectoRexService {
 
     //查询集合数据
     public List<VectorSearchResult> query(CollectionDataQueryReq req) {
+        dashboardService.incrementTodayQueryCount();
         MapDBStorage store = vectoRexClient.getStore(req.getCollectionName());
         VectoRexEntity structure = getCollection(req.getCollectionName());
         ConditionBuilder builder=new ConditionBuilder();
@@ -196,6 +229,4 @@ public class VectoRexService {
 
         return builder;
     }
-
-
 }

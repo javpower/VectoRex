@@ -47,6 +47,12 @@ public class VectoRexController {
         log.info("getCollections request");
         return ServerResponse.createBySuccess("操作成功",vectoRexService.getCollections());
     }
+    @PostMapping("/page/data/page")
+    @Operation(summary = "分页查询集合列表", description = "根据条件查询向量集合的列表")
+    public ServerResponse<PageResult<VectoRexEntity>> pageCollection(@RequestBody VectoRexCollectionPageReq req) {
+        log.info("page request: {}", req);
+        return ServerResponse.createBySuccess("操作成功",vectoRexService.pageCollection(req));
+    }
     @PostMapping("/collections/data/add")
     @Operation(summary = "添加集合数据", description = "向指定集合中添加数据")
     public ServerResponse add(@RequestBody CollectionDataAddReq req) {

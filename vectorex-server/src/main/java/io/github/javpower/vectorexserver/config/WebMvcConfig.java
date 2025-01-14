@@ -4,20 +4,15 @@ package io.github.javpower.vectorexserver.config;
 import io.github.javpower.vectorexserver.interceptor.JsonRequestBodyFilter;
 import io.github.javpower.vectorexserver.interceptor.LoginInterceptor;
 import io.github.javpower.vectorexserver.interceptor.RefreshTokenInterceptor;
-import io.github.javpower.vectorexserver.util.TokenUtil;
+import io.github.javpower.vectorexserver.service.SysBizService;
 import io.github.javpower.vectorexserver.util.VectorRexSpringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.PathResourceResolver;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +27,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public LoginInterceptor loginInterceptor() {
-        return new LoginInterceptor(VectorRexSpringUtils.getBean(TokenUtil.class));
+        return new LoginInterceptor(VectorRexSpringUtils.getBean(SysBizService.class));
     }
     @Bean
     public RefreshTokenInterceptor refreshTokenInterceptor() {
-        return new RefreshTokenInterceptor(VectorRexSpringUtils.getBean(TokenUtil.class));
+        return new RefreshTokenInterceptor(VectorRexSpringUtils.getBean(SysBizService.class));
     }
     @Bean
     public FilterRegistrationBean jsonRequestBodyFilter() {

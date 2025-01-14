@@ -3,9 +3,11 @@ package io.github.javpower.vectorexserver;
 import io.github.javpower.vectorex.keynote.VectorDB;
 import io.github.javpower.vectorexcore.VectoRexClient;
 import io.github.javpower.vectorexcore.entity.VectoRexEntity;
-import io.github.javpower.vectorexserver.service.DashboardService;
+import io.github.javpower.vectorexserver.config.VectorRex;
+import io.github.javpower.vectorexserver.service.SysBizService;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +15,10 @@ import java.util.List;
 
 @Service
 public class VectoRexInit  implements InitializingBean, DisposableBean {
-
     private VectoRexClient vectoRexDbClient;
-    private DashboardService dashboardService;
+    private SysBizService sysBizService;
+    @Autowired
+    private VectorRex vectorRex;
     @Override
     public void afterPropertiesSet() {
         initialize();
@@ -33,8 +36,8 @@ public class VectoRexInit  implements InitializingBean, DisposableBean {
         return vectoRexDbClient;
     }
     @Bean
-    public DashboardService dashboardService() {
-        return dashboardService;
+    public SysBizService dashboardService() {
+        return sysBizService;
     }
 
     public void handler() {
@@ -42,7 +45,10 @@ public class VectoRexInit  implements InitializingBean, DisposableBean {
         for (VectoRexEntity collection : collections) {
             vectoRexDbClient.createCollection(collection);
         }
-        dashboardService=new DashboardService(VectorDB.mapDBManager.getDb());
+        sysBizService =new SysBizService(VectorDB.mapDBManager.getDb());
+        if (!sysBizService.existUser(vectorRex.getUsername())) {
+            sysBizService.addUser(vectorRex.getUsername(),vectorRex.getPassword());
+        }
     }
 
 }

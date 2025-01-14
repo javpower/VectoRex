@@ -50,8 +50,10 @@ public class TokenUtil {
      */
     public boolean validateToken(String token) {
         try {
-            // 解密 Token
-            AesUtil.decrypt(token);
+            //取出用户名和密码
+            String decryptedData = AesUtil.decrypt(token);
+            String[] parts = decryptedData.split("\\|");
+
             // 检查 Token 是否过期
             Long tokenTime = TOKEN_TIME.get(token);
             if(tokenTime!=null){

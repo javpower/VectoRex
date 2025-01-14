@@ -4,6 +4,7 @@ package io.github.javpower.vectorexserver.interceptor;
 import io.github.javpower.vectorexserver.annotation.IgnoreLogin;
 import io.github.javpower.vectorexserver.exception.CommonException;
 import io.github.javpower.vectorexserver.response.ServerResponse;
+import io.github.javpower.vectorexserver.service.SysBizService;
 import io.github.javpower.vectorexserver.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,9 +23,9 @@ import static io.github.javpower.vectorexserver.response.ResponseCode.NO_AUTH;
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private TokenUtil tokenUtil;
-    public LoginInterceptor(TokenUtil tokenUtil) {
-        this.tokenUtil = tokenUtil;
+    private SysBizService sysBizService;
+    public LoginInterceptor(SysBizService sysBizService) {
+        this.sysBizService = sysBizService;
     }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -43,7 +44,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 throw CommonException.create(ServerResponse.createByError(NO_AUTH.getCode(),"token不能为空"));
             }
             //校验 token
-            if(!tokenUtil.validateToken(token)){
+            if(!sysBizService.validateToken(token)){
                 throw CommonException.create(ServerResponse.createByError(NO_AUTH.getCode(),"无效token"));
             }
         }

@@ -1,6 +1,6 @@
 # **VectoRex**
 
-**纯 Java 实现的高性能向量搜索引擎**
+**纯 Java 实现的高性能向量数据库**
 
 <div style="display: inline-block; border: 4px solid #ccc; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px; padding: 10px;">
   <img src="./image/logo.png" alt="VectoRex" style="border-radius: 10px;" />
@@ -8,7 +8,7 @@
 
 ## **简介**
 
-**VectoRex** 是一款高性能、可扩展的向量搜索引擎，专为现代 AI 和大数据应用设计。它具备轻量级、可嵌入和独立部署使用等优势，能够轻松应对推荐系统、图像搜索、自然语言处理等复杂场景，为开发者提供强大而灵活的搜索解决方案。
+**VectoRex** 是一款高性能、可扩展的向量数据库，专为现代 AI 和大数据应用设计。它具备轻量级、可嵌入和独立部署使用等优势，能够轻松应对推荐系统、图像搜索、自然语言处理等复杂场景，为开发者提供强大而灵活的搜索解决方案。
 
 ### 核心优势
 

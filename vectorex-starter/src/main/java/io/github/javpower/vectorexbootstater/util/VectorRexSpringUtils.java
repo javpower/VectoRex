@@ -42,4 +42,5 @@ public class VectorRexSpringUtils implements ApplicationContextAware {
     public static <T> T getBean(Class<T> clazz, String beanName) {
         return (T) applicationContext.getBean(beanName, clazz);
     }
+
 }

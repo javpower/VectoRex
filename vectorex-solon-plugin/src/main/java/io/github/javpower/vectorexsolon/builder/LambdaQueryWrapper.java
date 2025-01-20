@@ -156,7 +156,7 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T> {
         List<VectorSearchResult> results;
 
         if (vector != null) {
-            if (!super.filters.getOp().isEmpty()) {
+            if (!super.filters.getOperations().isEmpty()) {
                 results = store.search(annsField, vector, topK, super.filters);
             } else {
                 results = store.search(annsField, vector, topK, null);

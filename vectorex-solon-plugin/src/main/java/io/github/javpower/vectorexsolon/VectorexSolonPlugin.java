@@ -12,7 +12,6 @@ public class VectorexSolonPlugin implements Plugin {
 
 
     public void start(AppContext context) throws Throwable {
-
          // 插件启动时的初始化逻辑
         context.beanMake(VectorexPropertiesConfiguration.class);
         context.beanMake(VectoRexInit.class);

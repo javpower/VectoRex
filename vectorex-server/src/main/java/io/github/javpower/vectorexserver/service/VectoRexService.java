@@ -173,7 +173,7 @@ public class VectoRexService {
         }
         if(StringUtils.isEmpty(req.getVectorFieldName())||req.getVector()==null){
             return store.query(builder);
-        }else if(builder.getOp().size()==0){
+        }else if(builder.getOperations().size()==0){
             return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), null);
         } else {
             return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), builder);

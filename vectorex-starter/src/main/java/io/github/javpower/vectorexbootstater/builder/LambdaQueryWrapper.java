@@ -145,7 +145,7 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T>  {
         MapDBStorage store = client.getStore(collectionName);
         List<VectorSearchResult> results;
         if (vector != null) {
-            if (super.filters.getOp().size()>0) {
+            if (super.filters.getOperations().size()>0) {
                 results = store.search(annsField, vector, topK,super.filters);
             }else {
                 results = store.search(annsField, vector, topK,null);

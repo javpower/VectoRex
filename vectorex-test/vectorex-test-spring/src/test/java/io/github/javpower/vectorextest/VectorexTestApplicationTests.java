@@ -29,15 +29,15 @@ class VectorexTestApplicationTests {
 //        faceMapper.insert(faces);
 //        System.out.printf("======");
          //查询
-        query = faceMapper.queryWrapper().query();
-        System.out.println(GsonUtil.toJson(query));
-//        List<Float> floats = generateRandomVector(128);
-//        long startTime = System.currentTimeMillis(); // 记录开始时间
-//        query = faceMapper.queryWrapper().eq(Face::getName, "Face 1").vector(Face::getVector, floats).topK(10).query();
-//        long endTime = System.currentTimeMillis(); // 记录结束时间
-//        long duration = endTime - startTime; // 计算执行时间
-//        System.out.println("查询耗时: " + duration + " ms");
+//        query = faceMapper.queryWrapper().query();
 //        System.out.println(GsonUtil.toJson(query));
+        List<Float> floats = generateRandomVector(128);
+        long startTime = System.currentTimeMillis(); // 记录开始时间
+        query = faceMapper.queryWrapper().like(Face::getName, "Face 1").vector(Face::getVector, floats).topK(10).query();
+        long endTime = System.currentTimeMillis(); // 记录结束时间
+        long duration = endTime - startTime; // 计算执行时间
+        System.out.println("查询耗时: " + duration + " ms");
+        System.out.println(GsonUtil.toJson(query));
 //        //删除
 //        faceMapper.removeById(1);
 //        //查询

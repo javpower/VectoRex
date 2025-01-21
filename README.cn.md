@@ -50,6 +50,7 @@
   ```sh
    docker run -d -p 8080:8382 --name vectorrex-server javpower/vectorex-server:v1.0.0
    ```
+   ![img.png](image/plat.png)
 - **vectorex-client**：作为 Java 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等，助力开发者便捷地在应用中集成 VectoRex 服务。通过 Maven 引入 VectoRex 客户端时，只需添加以下依赖：
   ```xml
   <dependency>

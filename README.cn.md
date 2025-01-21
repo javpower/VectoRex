@@ -1,9 +1,9 @@
 # **VectoRex**
 
-**纯 Java 实现的高性能向量数据库**
+
 
 <div style="display: inline-block; border: 4px solid #ccc; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px; padding: 10px;">
-  <img src="./image/logo.png" alt="VectoRex" style="border-radius: 10px;" />
+  <img src="./image/doc.png" alt="VectoRex" style="border-radius: 10px;" />
 </div>
 
 ## **简介**

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.javpower</groupId>
   <artifactId>vectorex</artifactId>
-  <version>1.4.0</version>
+  <version>1.5.0</version>
   <packaging>pom</packaging>
   <name>VectoRex</name>
   <description>vectorex</description>
@@ -47,7 +47,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <mica-auto.vaersion>2.3.2</mica-auto.vaersion>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <revision>1.4.0</revision>
+    <revision>1.5.0</revision>
     <maven-resources.version>3.3.1</maven-resources.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <javapoet.version>1.13.0</javapoet.version>
@@ -57,17 +57,17 @@
       <dependency>
         <groupId>io.github.javpower</groupId>
         <artifactId>vectorex-starter</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
       <dependency>
         <groupId>io.github.javpower</groupId>
         <artifactId>vectorex-solon-plugin</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
       <dependency>
         <groupId>io.github.javpower</groupId>
         <artifactId>vectorex-core</artifactId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
       </dependency>
       <dependency>
         <groupId>io.github.javpower</groupId>

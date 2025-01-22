@@ -82,9 +82,9 @@ public class VecroRexConverter {
         }
         vectoRex.setVectorFileds(vectorFileds);
         vectoRex.setScalarFields(scalarFields);
-        if(CollectionUtils.isEmpty(vectorFileds)){
-            throw new IllegalArgumentException("the vector filed does not null");
-        }
+//        if(CollectionUtils.isEmpty(vectorFileds)){
+//            throw new IllegalArgumentException("the vector filed does not null");
+//        }
         if(VecroRexCache.primaryKey.get(entityClass.getName())==null){
             throw new IllegalArgumentException("the primary key does not null");
         }

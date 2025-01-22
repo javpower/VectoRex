@@ -15,6 +15,7 @@ public class QueryBuilder<T> {
     private String collectionName;
     private List<ConditionFiledReq> conditions = new ArrayList<>();
     private List<Float> vector;
+    private String textVector;
     private String vectorFieldName;
     private Integer topK;
     private Integer pageIndex;
@@ -95,6 +96,11 @@ public class QueryBuilder<T> {
         this.vector = vector;
         return this;
     }
+    public QueryBuilder<T> textVector(String vectorFieldName,String textVector) {
+        this.vectorFieldName = vectorFieldName;
+        this.textVector = textVector;
+        return this;
+    }
 
     public QueryBuilder<T> topK(Integer topK) {
         this.topK = topK;
@@ -110,6 +116,7 @@ public class QueryBuilder<T> {
         req.setCollectionName(collectionName);
         req.setQuery(conditions);
         req.setVector(vector);
+        req.setTextVector(textVector);
         req.setVectorFieldName(vectorFieldName);
         req.setTopK(topK);
         req.setPageIndex(pageIndex);

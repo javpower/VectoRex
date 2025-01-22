@@ -30,6 +30,7 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T>  {
     private String annsField;
     private int topK=1;
     private List<Float> vector;
+    private String textVector;
     private VectoRexClient client;
 
     public LambdaQueryWrapper(VectoRexClient client,String collectionName,Class<T> entityType) {
@@ -49,6 +50,16 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T>  {
     public LambdaQueryWrapper<T> vector(FieldFunction<T,?> annsField, List<Float> vector) {
         this.annsField=annsField.getFieldName(annsField);
         this.vector=vector;
+        return this;
+    }
+    public LambdaQueryWrapper<T> textVector(String annsField, String textVector) {
+        this.annsField=annsField;
+        this.textVector=textVector;
+        return this;
+    }
+    public LambdaQueryWrapper<T> textVector(FieldFunction<T,?> annsField, String textVector) {
+        this.annsField=annsField.getFieldName(annsField);
+        this.textVector=textVector;
         return this;
     }
     // 重写条件构建方法，使用 super 调用父类的实现
@@ -150,7 +161,13 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T>  {
             }else {
                 results = store.search(annsField, vector, topK,null);
             }
-        } else {
+        }else if(textVector!=null){
+            if (super.filters.getOperations().size()>0) {
+                results = store.search(annsField, textVector, topK,super.filters);
+            }else {
+                results = store.search(annsField, textVector, topK,null);
+            }
+        }else {
             results = store.query(super.filters);
         }
         Map<String, String> toFiled = VecroRexCache.toField.get(entityType.getName());

@@ -171,12 +171,33 @@ public class VectoRexService {
                 }
             }
         }
-        if(StringUtils.isEmpty(req.getVectorFieldName())||req.getVector()==null){
+        if (StringUtils.isEmpty(req.getVectorFieldName()) || (req.getVector() == null && req.getTextVector() == null)) {
+            // 如果没有指定向量字段名，或者既没有提供向量也没有提供文本向量，则执行普通查询
             return store.query(builder);
-        }else if(builder.getOperations().size()==0){
-            return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), null);
         } else {
-            return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), builder);
+            // 如果有向量字段名，并且提供了向量或文本向量
+            if (req.getVector() != null) {
+                // 如果提供了向量（List<Float>）
+                if (builder.getOperations().isEmpty()) {
+                    // 如果没有额外的标量条件，则执行纯向量搜索
+                    return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), null);
+                } else {
+                    // 如果有额外的标量条件，则执行混合搜索
+                    return store.search(req.getVectorFieldName(), req.getVector(), req.getTopK(), builder);
+                }
+            } else if (req.getTextVector() != null) {
+                // 如果提供了文本向量（String）
+                if (builder.getOperations().isEmpty()) {
+                    // 如果没有额外的标量条件，则执行纯文本向量搜索
+                    return store.search(req.getVectorFieldName(), req.getTextVector(), req.getTopK(), null);
+                } else {
+                    // 如果有额外的标量条件，则执行混合搜索
+                    return store.search(req.getVectorFieldName(), req.getTextVector(), req.getTopK(), builder);
+                }
+            } else {
+                // 如果既没有提供向量也没有提供文本向量，则执行普通查询
+                return store.query(builder);
+            }
         }
     }
 

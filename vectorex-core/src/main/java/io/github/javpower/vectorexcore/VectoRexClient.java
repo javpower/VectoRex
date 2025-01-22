@@ -46,6 +46,7 @@ public class VectoRexClient {
     public List<VectoRexEntity> getCollections() {
         return vectoRexEntityMap.values().stream().collect(Collectors.toList());
     }
+
     public VectoRexEntity getCollection(String collection) {
         return vectoRexEntityMap.get(collection);
     }

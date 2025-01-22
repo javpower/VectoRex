@@ -20,6 +20,9 @@ public class CollectionDataQueryReq implements Serializable {
     @Schema(description = "向量数据", example = "[0.1, 0.2, 0.3]")
     private List<Float> vector;
 
+    @Schema(description = "字符BM25检索", example = "hello")
+    private String textVector;
+
     @Schema(description = "向量字段名称", example = "vector_field")
     private String vectorFieldName;
 

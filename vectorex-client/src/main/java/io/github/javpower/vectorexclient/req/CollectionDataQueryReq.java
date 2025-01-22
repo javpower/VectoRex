@@ -19,6 +19,8 @@ public class CollectionDataQueryReq implements Serializable {
     //向量数据
     private List<Float> vector;
 
+    private String textVector;
+
     //向量字段名称
     private String vectorFieldName;
 

@@ -24,6 +24,7 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T> {
     private String annsField;
     private int topK = 1;
     private List<Float> vector;
+    private String textVector;
     private VectoRexClient client;
     private boolean enableScore = true;  // 新增属性：是否启用评分
 
@@ -52,7 +53,16 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T> {
         this.vector = vector;
         return this;
     }
-
+    public LambdaQueryWrapper<T> textVector(String annsField, String textVector) {
+        this.annsField=annsField;
+        this.textVector=textVector;
+        return this;
+    }
+    public LambdaQueryWrapper<T> textVector(FieldFunction<T,?> annsField, String textVector) {
+        this.annsField=annsField.getFieldName(annsField);
+        this.textVector=textVector;
+        return this;
+    }
     // 是否启用评分
     public LambdaQueryWrapper<T> enableScore(boolean enable) {
         this.enableScore = enable;
@@ -156,12 +166,18 @@ public class LambdaQueryWrapper<T> extends VectoRexConditionBuilder<T> {
         List<VectorSearchResult> results;
 
         if (vector != null) {
-            if (!super.filters.getOperations().isEmpty()) {
-                results = store.search(annsField, vector, topK, super.filters);
-            } else {
-                results = store.search(annsField, vector, topK, null);
+            if (super.filters.getOperations().size()>0) {
+                results = store.search(annsField, vector, topK,super.filters);
+            }else {
+                results = store.search(annsField, vector, topK,null);
             }
-        } else {
+        }else if(textVector!=null){
+            if (super.filters.getOperations().size()>0) {
+                results = store.search(annsField, textVector, topK,super.filters);
+            }else {
+                results = store.search(annsField, textVector, topK,null);
+            }
+        }else {
             results = store.query(super.filters);
         }
 

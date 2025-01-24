@@ -55,7 +55,7 @@
   ```xml
   <dependency>
       <groupId>io.github.javpower</groupId>
-      <artifactId>vectorrex-client</artifactId>
+      <artifactId>vectorex-client</artifactId>
       <version>1.5.1</version>
   </dependency>
   ```

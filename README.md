@@ -60,6 +60,7 @@
   ```
 - **vectorex-client-go**: As a Go client SDK, it provides rich interfaces for interacting with VectoRex services, including creating collections, adding data, and querying data. To include VectoRex client via Go Modules, simply run the following command:
   ```bash
+   go get gitee.com/javpower/VectoRex/vectorex-client-go
    go get github.com/javpower/VectoRex/vectorex-client-go
   ```
 ---
@@ -103,6 +104,7 @@ VectoRex is open-sourced under the **Apache License 2.0**. For more details, ple
 ## **Contact Us**
 
 - **Email**: javpower@163.com
+- **Gitee**：[https://gitee.com/javpower/vectorex](https://gitee.com/javpower/vectorex)
 - **GitHub**: [https://github.com/javpower/vectorex](https://github.com/javpower/vectorex)
 
 ---

@@ -61,6 +61,9 @@
   ```
 - **vectorex-client-go**：作为 Go 客户端 SDK，提供了与 VectoRex 服务交互的丰富接口，包括创建集合、添加数据、查询数据等功能。通过 Go Modules 引入 VectoRex 客户端时，只需运行以下命令：
   ```bash
+   go get gitee.com/javpower/VectoRex/vectorex-client-go
+  ```
+  ```bash
    go get github.com/javpower/VectoRex/vectorex-client-go
   ```
 ---
@@ -107,6 +110,7 @@ VectoRex 基于 **Apache License 2.0** 开源。详情请参阅 [LICENSE](LICENS
 ## **联系我们**
 
 - **邮箱**：javpower@163.com
+- **Gitee**：[https://gitee.com/javpower/vectorex](https://gitee.com/javpower/vectorex)
 - **GitHub**：[https://github.com/javpower/vectorex](https://github.com/javpower/vectorex)
 
 ---

@@ -110,7 +110,4 @@ VectoRex 基于 **Apache License 2.0** 开源。详情请参阅 [LICENSE](LICENS
 ## **联系我们**
 
 - **邮箱**：javpower@163.com
-- **Gitee**：[https://gitee.com/javpower/vectorex](https://gitee.com/javpower/vectorex)
-- **GitHub**：[https://github.com/javpower/vectorex](https://github.com/javpower/vectorex)
-
 ---

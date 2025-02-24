@@ -35,7 +35,7 @@
   <dependency>
       <groupId>io.github.javpower</groupId>
       <artifactId>vectorex-starter</artifactId>
-      <version>1.3.0</version>
+      <version>1.5.3</version>
   </dependency>
   ```
 - **vectorex-solon-plugin**: As a Solon plugin, it provides auto-configuration and convenient APIs, helping developers easily integrate VectoRex functionalities into Solon applications. To include VectoRex via Maven, simply add the following dependency:
@@ -43,7 +43,7 @@
   <dependency>
       <groupId>io.github.javpower</groupId>
       <artifactId>vectorex-solon-plugin</artifactId>
-      <version>1.3.0</version>
+      <version>1.5.3</version>
   </dependency>
   ```  
 - **vectorex-server**: As a standalone retrieval service, it offers complete functionalities such as creating collections, adding data, and querying data, providing flexible deployment options.
@@ -55,7 +55,7 @@
   <dependency>
       <groupId>io.github.javpower</groupId>
       <artifactId>vectorrex-client</artifactId>
-      <version>1.3.0</version>
+      <version>1.5.3</version>
   </dependency>
   ```
 - **vectorex-client-go**: As a Go client SDK, it provides rich interfaces for interacting with VectoRex services, including creating collections, adding data, and querying data. To include VectoRex client via Go Modules, simply run the following command:

@@ -7,14 +7,9 @@ import io.github.javpower.vectorexcore.entity.VectoRexEntity;
 import io.github.javpower.vectorexcore.model.VectoRexProperties;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
-import org.springframework.core.type.classreading.MetadataReader;
-import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.springframework.util.ClassUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,34 +46,64 @@ public abstract class AbstractClientBuilder  {
     }
 
     // 获取指定包下实体类
+    // 获取指定包下实体类（去框架化实现）
     private List<Class<?>> getClass(List<String> packages) {
-        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         return Optional.ofNullable(packages)
                 .orElseThrow(() -> new RuntimeException("model package is null, please configure the [packages] parameter"))
                 .stream()
-                .map(pg -> {
-                    List<Class<?>> res = new ArrayList<>();
-                    String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-                            + ClassUtils.convertClassNameToResourcePath(pg + ".") + CLASS;
-                    try {
-                        Resource[] resources = resourcePatternResolver.getResources(pattern);
-                        MetadataReaderFactory readerFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
-                        for (Resource resource : resources) {
-                            MetadataReader reader = readerFactory.getMetadataReader(resource);
-                            String classname = reader.getClassMetadata().getClassName();
-                            Class<?> clazz = Class.forName(classname);
-                            VectoRexCollection annotation = clazz.getAnnotation(VectoRexCollection.class);
-                            if (annotation != null) {
-                                res.add(clazz);
-                            }
-                        }
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                    return res;
-                }).flatMap(Collection::stream)
+                .flatMap(pg -> scanPackageClasses(pg).stream())
+                .filter(clazz -> clazz.getAnnotation(VectoRexCollection.class) != null)
                 .collect(Collectors.toList());
     }
+
+    // 通用包扫描方法
+    private List<Class<?>> scanPackageClasses(String basePackage) {
+        String path = basePackage.replace('.', '/');
+        Enumeration<java.net.URL> resources;
+        try {
+            resources = Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResources(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Scan package failed: " + basePackage, e);
+        }
+
+        List<Class<?>> classes = new ArrayList<>();
+        while (resources.hasMoreElements()) {
+            java.net.URL resource = resources.nextElement();
+            classes.addAll(scanDirectory(
+                    new File(resource.getFile().replaceAll("%20", " ")),
+                    basePackage
+            ));
+        }
+        return classes;
+    }
+
+    // 递归扫描目录
+    private List<Class<?>> scanDirectory(File directory, String packageName) {
+        List<Class<?>> classes = new ArrayList<>();
+        if (!directory.exists()) return classes;
+
+        File[] files = directory.listFiles();
+        if (files == null) return classes;
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                classes.addAll(scanDirectory(file,
+                        packageName + "." + file.getName()));
+            } else if (file.getName().endsWith(".class")) {
+                String className = packageName + '.'
+                        + file.getName().substring(0, file.getName().length() - 6);
+                try {
+                    classes.add(Class.forName(className));
+                } catch (ClassNotFoundException e) {
+                    log.warn("Class not found: {}", className);
+                }
+            }
+        }
+        return classes;
+    }
+
 
     // 缓存 + 是否构建集合
     public void performBusinessLogic(List<Class<?>> annotatedClasses) {

@@ -7,7 +7,6 @@ import io.github.javpower.vectorexsolon.config.VectorexPropertiesConfiguration;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.core.bean.LifecycleBean;
-import org.springframework.beans.BeanUtils;
 
 /**
  * @author cxc
@@ -19,7 +18,9 @@ public class VectoRexInit extends AbstractClientBuilder implements LifecycleBean
     public VectoRexClient init(VectorexPropertiesConfiguration vectoRexPropertiesConfiguration) {
         VectoRexProperties vectoRexProperties = new VectoRexProperties();
         // 手动复制属性，因为没有 BeanUtils
-        BeanUtils.copyProperties(vectoRexPropertiesConfiguration, vectoRexProperties);
+        vectoRexProperties.setEnable(vectoRexPropertiesConfiguration.isEnable());
+        vectoRexProperties.setUri(vectoRexPropertiesConfiguration.getUri());
+        vectoRexProperties.setPackages(vectoRexPropertiesConfiguration.getPackages());
         super.setProperties(vectoRexProperties);
         super.initialize();
         return getClient();

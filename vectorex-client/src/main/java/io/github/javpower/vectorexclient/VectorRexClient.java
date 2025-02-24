@@ -7,9 +7,7 @@ import io.github.javpower.vectorexclient.res.PageResult;
 import io.github.javpower.vectorexclient.res.ServerResponse;
 import io.github.javpower.vectorexclient.res.VectorSearchResult;
 import io.github.javpower.vectorexclient.util.GsonUtil;
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
-import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class VectorRexClient {
 
     private static final long TOKEN_EXPIRE_TIME = 2 * 60 * 60 * 1000-2*60*1000; // Token expires in 2 hours
@@ -80,7 +77,12 @@ public class VectorRexClient {
     public ServerResponse<List<VectorSearchResult>> queryCollectionData(QueryBuilder queryBuilder)  {
         CollectionDataPageReq queryReq = queryBuilder.build();
         CollectionDataQueryReq req = new CollectionDataQueryReq();
-        BeanUtils.copyProperties(queryReq,req);
+        req.setVector(queryReq.getVector());
+        req.setQuery(queryReq.getQuery());
+        req.setCollectionName(queryReq.getCollectionName());
+        req.setTextVector(queryReq.getTextVector());
+        req.setTopK(queryReq.getTopK());
+        req.setVectorFieldName(queryReq.getVectorFieldName());
         ServerResponse<List<Map>> response = executeRequest("/vectorex/collections/data/query", req);
         if (response.isSuccess()) {
             List<VectorSearchResult> vectorSearchResults=new ArrayList<>();
@@ -121,7 +123,6 @@ public class VectorRexClient {
     }
 
     private <T> ServerResponse<T> executeRequest(String path, Object reqBody)  {
-        log.debug("executeRequest path: {}, reqBody: {}", path, GsonUtil.toJson(reqBody));
         try {
             checkToken();
             String url = baseUri + path;

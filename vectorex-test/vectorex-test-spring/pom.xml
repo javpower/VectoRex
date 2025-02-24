@@ -18,12 +18,12 @@
         <dependency>
             <groupId>io.github.javpower</groupId>
             <artifactId>vectorex-client</artifactId>
-            <version>1.2.0</version>
+            <version>1.5.3</version>
         </dependency>
         <dependency>
             <groupId>io.github.javpower</groupId>
             <artifactId>vectorex-starter</artifactId>
-            <version>1.5.0</version>
+            <version>1.5.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
